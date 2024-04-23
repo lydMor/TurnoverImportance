@@ -9,15 +9,17 @@
 #3: SpRel= information about the associations between species group A & B 
       #(long form- WITH THESE NAMES: col1="spA", col2="SpB", col3="value")
 
-###### Download example files from: 
+###### Download example files from GitHub
     
 T_comp<- function(Sp1, Sp2, SpRel){
   require(betapart)
   require(reshape2)
   require(tidyverse)
+Sp1<<-as.matrix(Sp1)
 SpA<<- melt(Sp1) 
 names(SpA)<<-c("site", "spA", "value")
 SpA<<- SpA %>% filter(value==1)
+Sp2<<-as.matrix(Sp2)
 SpB<<-melt(Sp2)
 names(SpB)<<-c("site", "spB", "value")
 SpB<<-SpB %>% filter(value==1)
@@ -77,9 +79,9 @@ return(SpA_Beta)
 
 
 # example Run: 
-Sp1<- read.csv("Sp1.csv")
-Sp2<-read.csv("Sp2.csv")
-SpRel<- read.csv("SpRel.csv")
+Sp1<- read.csv("https://raw.githubusercontent.com/lydMor/TurnoverImportance/main/TurnoverImportanceFunction/Sp1.csv", row.names=1)
+Sp2<-read.csv("https://raw.githubusercontent.com/lydMor/TurnoverImportance/main/TurnoverImportanceFunction/Sp2.csv", row.names=1)
+SpRel<- read.csv("https://raw.githubusercontent.com/lydMor/TurnoverImportance/main/TurnoverImportanceFunction/SpRel.csv")
 T_comp(Sp1=Sp1, Sp2=Sp2, SpRel=SpRel)
 
 
