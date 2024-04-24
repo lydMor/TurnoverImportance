@@ -15,14 +15,14 @@ T_comp<- function(Sp1, Sp2, SpRel){
   require(betapart)
   require(reshape2)
   require(tidyverse)
-Sp1<<-as.matrix(Sp1)
+Sp1<- as.matrix(Sp1)
 SpA<<- melt(Sp1) 
-names(SpA)<<-c("site", "spA", "value")
-SpA<<- SpA %>% filter(value==1)
-Sp2<<-as.matrix(Sp2)
+names(SpA)<-c("site", "spA", "value")
+SpA<- SpA %>% filter(value==1)
+Sp2<-as.matrix(Sp2)
 SpB<<-melt(Sp2)
 names(SpB)<<-c("site", "spB", "value")
-SpB<<-SpB %>% filter(value==1)
+SpB<-SpB %>% filter(value==1)
   print("creating Betapart objects")
   
   SpA2<<-unique(SpRel[1])
@@ -57,13 +57,13 @@ print("Betapart.core made")
 
 
 SpA_Beta<<-data.frame(spA=c(SpA2))
-for(i in 1:nrow(SpA_Beta)){
+for(x in 1:nrow(SpA_Beta)){
   print(i)
-  query<<-SpA_Beta$spA[i]
+  query<<-SpA_Beta$spA[x]
   test<<-beta.multi(Core_list[[query]])
-  SpA_Beta$total_sor[i]<<- paste(test$beta.SOR)
-  SpA_Beta$nested[i]<<-paste(test$beta.SNE)
-  SpA_Beta$simpson[i]<<-paste(test$beta.SIM)
+  SpA_Beta$total_sor[x]<<- paste(test$beta.SOR)
+  SpA_Beta$nested[x]<<-paste(test$beta.SNE)
+  SpA_Beta$simpson[x]<<-paste(test$beta.SIM)
   }
 SpA_Beta$total_sor<<-as.numeric(SpA_Beta$total_sor)
 SpA_Beta$nested<<-as.numeric(SpA_Beta$nested)
@@ -79,9 +79,12 @@ return(SpA_Beta)
 
 
 # example Run: 
+Sp1<- read.csv("Sp1.csv")
+Sp2<-read.csv("Sp2.csv")
+SpRel<- read.csv("SpRel.csv")
+T_comp(Sp1=Sp1, Sp2=Sp2, SpRel=SpRel)
+
 Sp1<- read.csv("https://raw.githubusercontent.com/lydMor/TurnoverImportance/main/TurnoverImportanceFunction/Sp1.csv", row.names=1)
 Sp2<-read.csv("https://raw.githubusercontent.com/lydMor/TurnoverImportance/main/TurnoverImportanceFunction/Sp2.csv", row.names=1)
 SpRel<- read.csv("https://raw.githubusercontent.com/lydMor/TurnoverImportance/main/TurnoverImportanceFunction/SpRel.csv")
 T_comp(Sp1=Sp1, Sp2=Sp2, SpRel=SpRel)
-
-
